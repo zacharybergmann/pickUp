@@ -4,7 +4,9 @@
   "description": "Organize pick up games without organizing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server/index.js",
+    "dev": "nodemon dist/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "grunt-babel": "^6.0.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-eslint": "0.0.5",
+    "grunt-shell": "^1.3.0",
     "load-grunt-tasks": "^3.5.0"
   }
 }

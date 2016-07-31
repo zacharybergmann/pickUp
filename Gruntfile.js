@@ -18,11 +18,18 @@ grunt.initConfig({
         ext:'.js'
       }]
     }
+  },
+  shell: {
+    devServer: {
+      command: 'heroku local'
+    }
   }
 });
 
 grunt.loadNpmTasks('grunt-contrib-clean');
+grunt.loadNpmTasks('grunt-shell');
 grunt.registerTask('default', [
   'clean',
-  'babel'
+  'babel',
+  'shell:devServer'
 ]);
