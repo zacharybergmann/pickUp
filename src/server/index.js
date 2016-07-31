@@ -1,5 +1,7 @@
 import app from './server';
 
-app.listen(process.env.PORT, () => {
-  console.log(`pickUp listening on port: ${process.env.PORT}!`);
+const port = process.env.PORT || 1337;
+
+app.listen(port, () => {
+  console.log(`pickUp listening on port: ${port}!`);
 });
