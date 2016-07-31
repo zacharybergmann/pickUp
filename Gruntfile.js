@@ -21,7 +21,7 @@ grunt.initConfig({
   },
   shell: {
     devServer: {
-      command: 'heroku local'
+      command: 'npm run dev'
     }
   }
 });
