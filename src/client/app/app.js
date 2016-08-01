@@ -1,33 +1,13 @@
-const timeSlots = _.range(17, 23).map(hour => {
-  return {
-    id: hour.toString(),
-    hour: hour,
-    name: moment(hour, 'hh').format('h:mma')
-  };
+angular.module('pickUp', ['ui.router', 'gameReqForm'])
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/index');
+
+  $stateProvider
+    .state('gameReq', {
+      url: '/index',
+      templateUrl: 'app/partials/gameReq/gameReqForm.html',
+      controller: 'TimeSelectController'
+    });
 });
-
-angular.module('pickUp', ['pickUp.services', 'ui.router'])
-  .controller('TimeSelectController', function($scope, GameReq) {
-    var gameReq = {};
-    $scope.requestGame = function() {
-      console.log('requesting Game');
-      gameReq.time = $scope.data.selectedOption.hour;
-      gameReq.smsNum = $scope.smsNum;
-      gameReq.sport = $scope.sportInput;
-
-      console.log(gameReq);
-
-      GameReq.requestGame(gameReq)
-        .then(function (data) {
-          console.log('Game requested');
-        })
-        .catch(function (error) {
-          console.error('error requesting game ', error);
-        });
-    };
-    $scope.data = {
-      model: null,
-      availableOptions: timeSlots,
-      selectedOption: timeSlots[0]
-    };
-  });
+  

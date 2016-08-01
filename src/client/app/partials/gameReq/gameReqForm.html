@@ -1,0 +1,24 @@
+<form ng-submit="requestGame()" >
+  <div class="row">
+    <div class="offset-by-three six columns" >
+      <label for="dateInput">Time</label>
+      <select name="timeSelect" class="u-full-width" id="dateInput" ng-options="option.name for option in data.availableOptions track by option.id" ng-model="data.selectedOption">
+      </select>
+    </div>
+  </div> <!-- end of row  -->
+  <div class="row">
+    <div class="offset-by-three six columns">
+      <label for="sportInput">Sport</label>
+      <select class="u-full-width" id="sportInput" ng-model="sportInput">
+        <option value="soccer" >Soccer</option>
+      </select>
+    </div>
+  </div> <!-- end of row  -->
+  <div class="row">
+    <div class="offset-by-three six columns">
+      <label for="exampleMessage">Phone Number</label>
+      <input type="tel" class="u-full-width" placeholder="we'll text you up when a game is available" id="phone" ng-model="smsNum"/>
+      <input class="button-primary" type="submit" value="Submit">
+    </div>
+  </div> <!-- end of row  -->
+</form>
