@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 import gameController from './games/gameController';
+import db from './mongoose/db';
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
