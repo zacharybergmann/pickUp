@@ -1,17 +1,17 @@
 angular.module('pickUp.services', [])
 
-.factory('Game', function($http) {
+.factory('GameReq', function($http) {
   var requestGame = function(gameReq) {
     return $http({
       method: 'POST',
       url: 'api/games',
       data: gameReq
     })
-    then(function (resp) {
-      return resp.data
+    .then(function (resp) {
+      return resp.data;
     });
   };
-  return function name(){
+  return {
     requestGame: requestGame
   };
 });
