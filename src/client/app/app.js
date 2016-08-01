@@ -8,6 +8,10 @@ angular.module('pickUp', ['ui.router', 'gameReqForm'])
       url: '/index',
       templateUrl: 'app/partials/gameReq/gameReqForm.html',
       controller: 'TimeSelectController'
+    })
+    .state('games', {
+      url: '/games',
+      templateUrl: 'app/partials/games/games.html'
     });
 });
   
