@@ -23,13 +23,25 @@ grunt.initConfig({
     devServer: {
       command: 'npm run dev'
     }
+  },
+  watch: {
+    scripts: {
+      files: 'src/**/*.js',
+      tasks: ['default'],
+      options: {
+        debounceDelay: 500
+      }
+    }
   }
 });
 
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-shell');
+grunt.loadNpmTasks('grunt-contrib-watch');
+grunt.loadNpmTasks('grunt-contrib-eslint');
 grunt.registerTask('default', [
   'clean',
+  'eslint',
   'babel',
   'shell:devServer'
 ]);
