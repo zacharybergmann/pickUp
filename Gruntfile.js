@@ -13,7 +13,7 @@ grunt.initConfig({
       files: [{
         expand: true,
         cwd: 'src',
-        src: ['**/*.js'],
+        src: ['server/**/*.js'],
         dest: 'dist',
         ext:'.js'
       }]
@@ -32,13 +32,20 @@ grunt.initConfig({
         debounceDelay: 500
       }
     }
+  },
+  eslint: {
+    options: {
+      ignorePattern: 'src/client/bower_components/**/*.js'
+    },
+    src: ['src/server/**/*.js', 'src/client/app/**/*.js']
   }
 });
 
 grunt.loadNpmTasks('grunt-contrib-clean');
 grunt.loadNpmTasks('grunt-shell');
 grunt.loadNpmTasks('grunt-contrib-watch');
-grunt.loadNpmTasks('grunt-contrib-eslint');
+// grunt.loadNpmTasks('grunt-contrib-eslint');
+grunt.loadNpmTasks("gruntify-eslint");
 grunt.registerTask('default', [
   'clean',
   'eslint',
