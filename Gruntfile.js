@@ -22,6 +22,9 @@ grunt.initConfig({
   shell: {
     devServer: {
       command: 'npm run dev'
+    },
+    heroku: {
+      command: 'heroku local'
     }
   },
   watch: {
@@ -50,5 +53,5 @@ grunt.registerTask('default', [
   'clean',
   'eslint',
   'babel',
-  'shell:devServer'
+  'shell:heroku'
 ]);
