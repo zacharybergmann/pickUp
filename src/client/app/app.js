@@ -6,7 +6,7 @@ const timeSlots = _.range(17, 23).map(hour => {
   };
 });
 
-angular.module('ngrepeatSelect', ['pickUp.services'])
+angular.module('pickUp', ['pickUp.services', 'ui.router'])
   .controller('TimeSelectController', function($scope, GameReq) {
     var gameReq = {};
     $scope.requestGame = function() {
