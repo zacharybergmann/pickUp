@@ -2,10 +2,13 @@ src/client/bower_components
 .env
 dist
 
+### node etc ###
+
 # Logs
 logs
 *.log
 npm-debug.log*
+
 
 # Runtime data
 pids
@@ -18,24 +21,21 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# nyc test coverage
-.nyc_output
-
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
-# node-waf configuration
-.lock-wscript
+# Compiled Dirs (http://nodejs.org/api/addons.html)
+build/
+dist/
 
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+# Dependency directorys
+# Deployed apps should consider commenting these lines out:
+# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+node_modules/
+bower_components/
 
-# Dependency directories
-node_modules
-jspm_packages
-
-# Optional npm cache directory
-.npm
-
-# Optional REPL history
-.node_repl_history
+# Floobits
+.floo
+.floobit
+.floo
+.flooignore
