@@ -1,0 +1,21 @@
+{
+  "name": "pickupgame",
+  "description": "Organize pick up games without organizing",
+  "main": "index.js",
+  "authors": [
+    "Harvey Sanders"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/harveysanders/pickUp",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "moment": "^2.14.1"
+  }
+}
