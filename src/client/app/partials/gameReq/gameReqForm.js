@@ -7,7 +7,7 @@ const timeSlots = _.range(17, 23).map(hour => {
 });
 
 angular.module('gameReqForm', ['pickUp.services'])
-.controller('TimeSelectController', function($scope, GameReq) {
+.controller('TimeSelectController', function($scope, $location, GameReq) {
     var gameReq = {};
     $scope.requestGame = function() {
       console.log('requesting Game');
@@ -20,6 +20,7 @@ angular.module('gameReqForm', ['pickUp.services'])
       GameReq.requestGame(gameReq)
         .then(function (data) {
           console.log('Game requested');
+          $location.path('/games');
         })
         .catch(function (error) {
           console.error('error requesting game ', error);
