@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="ngrepeatSelect">
 <head>
   <title>Pick Up!</title>
   <link rel="stylesheet" type="text/css" href="css/normalize.css">
@@ -10,32 +10,41 @@
   <!-- The above form looks like this -->
 <form>
   <div class="row">
-    <div class="six columns">
-      <label for="dateInput">Sport</label>
-      <select class="u-full-width" id="dateInput">
-        <option value="Option 1">Soccer</option>
+    <div class="offset-by-three six columns" ng-controller="TimeSelectController">
+      <label for="dateInput">Time</label>
+      <select name="timeSelect" class="u-full-width" id="dateInput" ng-options="option.name for option in data.availableOptions track by option.id" ng-model="data.selectedOption">
       </select>
     </div>
-    <div class="six columns">
+  </div> <!-- end of row  -->
+  <div class="row">
+    <div class="offset-by-three six columns">
       <label for="sportInput">Sport</label>
       <select class="u-full-width" id="sportInput">
         <option value="Option 1">Soccer</option>
       </select>
     </div>
   </div> <!-- end of row  -->
-  <label for="exampleMessage">Message</label>
-  <textarea class="u-full-width" placeholder="Hi Dave …" id="exampleMessage"></textarea>
-  <label class="example-send-yourself-copy">
-    <input type="checkbox">
-    <span class="label-body">Send a copy to yourself</span>
-  </label>
-  <input class="button-primary" type="submit" value="Submit">
+  <div class="row">
+    <div class="offset-by-three six columns">
+      <label for="exampleMessage">Phone Number</label>
+      <input type="tel" class="u-full-width" placeholder="we'll text you up when a game is available" id="phone" />
+      <label class="example-send-yourself-copy">
+        <input type="checkbox">
+        <span class="label-body">Send a copy to yourself</span>
+      </label>
+      <input class="button-primary" type="submit" value="Submit">
+    </div>
+  </div> <!-- end of row  -->
 </form>
 
 <!-- Always wrap checkbox and radio inputs in a label and use a <span class="label-body"> inside of it -->
 
-<!-- Note: The class .u-full-width is just a utility class shorthand for width: 100% --> 
+<!-- Note: The class .u-full-width is just a utility class shorthand for width: 100% -->
+
+  <script src="bower_components/underscore/underscore-min.js"></script>
   <script src="bower_components/moment/min/moment.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="app.js"></script>
+
 </body>
 </html>
