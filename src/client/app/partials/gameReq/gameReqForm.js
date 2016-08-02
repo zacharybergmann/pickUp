@@ -7,7 +7,7 @@ var timeSlots = _.range(17, 23).map(function (hour) {
 });
 
 angular.module('gameReqForm', ['pickUp.services'])
-.controller('TimeSelectController', function($scope, $location, GameReq) {
+.controller('TimeSelectController', function($scope, $location, GameReq, sharedProps) {
     var gameReq = {};
     $scope.requestGame = function() {
       console.log('requesting Game');
@@ -19,7 +19,8 @@ angular.module('gameReqForm', ['pickUp.services'])
 
       GameReq.requestGame(gameReq)
         .then(function (data) {
-          console.log('Game requested');
+          console.log('Game requested for ', data.gameTime);
+          sharedProps.set(data.gameTime);
           $location.path('/games');
         })
         .catch(function (error) {

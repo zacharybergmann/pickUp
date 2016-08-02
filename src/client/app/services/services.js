@@ -14,4 +14,15 @@ angular.module('pickUp.services', [])
   return {
     requestGame: requestGame
   };
+})
+.factory('sharedProps', function(){
+  var property = '';
+  return {
+    get: function() {
+      return property;
+    },
+    set: function(val) {
+      property = val;
+    }
+  };
 });

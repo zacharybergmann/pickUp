@@ -2,6 +2,7 @@ import sms from '../twilio/sms';
 import Game from './models/game';
 import db from '../mongoose/db';
 import helpers from '../helpers';
+import moment from 'moment';
 
 export default {
   addRequest: (req, res, next) => {
@@ -18,7 +19,13 @@ export default {
 
     db.saveGame(newGame)
       .then((game) => {
-        console.log('game saved. game time at ', game.startTime);
+        let gameTime = moment(game.startTime).format('LLLL');
+        console.log('game saved. game time at ', gameTime);
+        res.status(201).json({gameTime: gameTime});
+      })
+      .catch(err => {
+        console.error(err)
+        res.status(500).send('error requesting game');
       });
 
     sms.sendScheduledGame({
@@ -28,6 +35,5 @@ export default {
       gameTime: gameReq.time
     });
 
-    res.status(201).send('requst added');
   }
 }
