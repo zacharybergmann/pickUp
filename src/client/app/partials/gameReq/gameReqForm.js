@@ -18,9 +18,8 @@ angular.module('gameReqForm', ['pickUp.services'])
       console.log(gameReq);
 
       GameReq.requestGame(gameReq)
-        .then(function (data) {
-          console.log('Game requested for ', data.gameTime);
-          sharedProps.set(data.gameTime);
+        .then(function (game) {
+          sharedProps.set(moment(game.startTime).format('LLLL'));
           $location.path('/games');
         })
         .catch(function (error) {

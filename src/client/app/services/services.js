@@ -8,6 +8,7 @@ angular.module('pickUp.services', [])
       data: gameReq
     })
     .then(function (resp) {
+      console.log('POST response data: ', resp.data);
       return resp.data;
     });
   };

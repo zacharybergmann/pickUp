@@ -43,9 +43,7 @@ export default {
       })  
       .then(db.saveGame)
       .then((savedGame) => {
-        let gameTime = moment(savedGame.startTime).format('LLLL');
-        console.log('game saved. game time at ', gameTime);
-        res.status(201).json({gameTime: gameTime});
+        res.status(201).json(savedGame);
       })
       .catch(err => {
         console.error('error saving game ', err)
