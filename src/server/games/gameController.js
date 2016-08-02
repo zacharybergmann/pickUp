@@ -20,20 +20,18 @@ export default {
     db.getGame(newGame)
       .then(foundGame => {
         if (foundGame) {
-          console.log('game found ', foundGame);
-          console.log('has Player ', helpers.includesPlayer(foundGame, gameReq.smsNum));
+          console.log('game found ');
           
           if ( helpers.includesPlayer(foundGame, gameReq.smsNum) ) {
             console.error('game already requested.');
             return Promise.resolve(foundGame);
           }
-          
           foundGame.smsNums.push({smsNum: gameReq.smsNum});
-          console.log('smsNums ', foundGame.smsNums);
+         
           foundGame.playRequests += 1
           return Promise.resolve(foundGame);
         } else {
-          console.log('game not found. using newGame ', newGame);
+          console.log('game not found. using newGame ');
           return Promise.resolve(newGame);
         }
       })
@@ -41,12 +39,16 @@ export default {
         // check if playRequest > minPlayer
         console.log('player Count: ', game.playRequests);
         if (helpers.hasEnoughPlayers(game)) {
-          sms.sendScheduledGame({
-            smsNum: gameReq.smsNum,
-            sport: gameReq.sport,
-            gameLoc: 'Stallings',
-            gameTime: gameReq.time
-          });
+          // send to all the players
+          helpers.forEachPlayer(game, (num) => {
+            console.log('texting ', num);
+            sms.sendScheduledGame({
+              smsNum: num,
+              sport: gameReq.sport,
+              gameLoc: 'Stallings',
+              gameTime: gameReq.time
+            });
+          })
         }
         return Promise.resolve(game);
       })  

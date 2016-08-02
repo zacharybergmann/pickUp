@@ -12,10 +12,19 @@ const helpers = {
     );
     return gameTime;
   },
+
   hasEnoughPlayers: game => game.playRequests >= game.minPlayers,
+
   includesPlayer: (game, smsNum) => game.smsNums.reduce((included, smsObj) => {
     return smsObj.smsNum === smsNum || included;
   }, false),
+
+  forEachPlayer: (game, cb) => {
+    game.smsNums.forEach(smsObj => {
+      cb(smsObj.smsNum);
+    });
+  },
+
 };
 
 export default helpers;
