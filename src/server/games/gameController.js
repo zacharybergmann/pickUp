@@ -21,6 +21,15 @@ export default {
       .then(foundGame => {
         if (foundGame) {
           console.log('game found ', foundGame);
+          console.log('has Player ', helpers.includesPlayer(foundGame, gameReq.smsNum));
+          
+          // if ( helpers.includesPlayer(foundGame, gameReq.smsNum) ) {
+          //   console.error('game already requested.');
+          //   return Promise.resolve(foundGame);
+          // }
+          
+          foundGame.smsNums.push({smsNum: gameReq.smsNum});
+          console.log('smsNums ', foundGame.smsNums);
           foundGame.playRequests += 1
           return Promise.resolve(foundGame);
         } else {
