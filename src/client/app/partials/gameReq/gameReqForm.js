@@ -1,4 +1,4 @@
-const timeSlots = _.range(17, 23).map(hour => {
+var timeSlots = _.range(17, 23).map(function (hour) {
   return {
     id: hour.toString(),
     hour: hour,
