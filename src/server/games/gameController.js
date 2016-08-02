@@ -1,6 +1,7 @@
 import sms from '../twilio/sms';
 import Game from './models/game';
 import db from '../mongoose/db';
+import helpers from '../helpers';
 
 export default {
   addRequest: (req, res, next) => {
@@ -9,7 +10,7 @@ export default {
     
     let newGame = new Game({
       sport: gameReq.sport,
-      startTime: gameReq.time,
+      startTime: helpers.createGameTime(gameReq.time),
       location: 'Stallings',
       minPlayers: 6,
       playRequests: 1
@@ -17,7 +18,7 @@ export default {
 
     db.saveGame(newGame)
       .then((game) => {
-        console.log('game saved', game);
+        console.log('game saved. game time at ', game.startTime);
       });
 
     sms.sendScheduledGame({
