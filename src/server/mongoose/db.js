@@ -1,3 +1,5 @@
+import Game from '../games/models/game';
+
 const db = {
   saveGame: (game) => {
     return new Promise ((resolve, reject) => {
@@ -7,6 +9,17 @@ const db = {
       });
     });
   },
+  getGame: (game) => {
+    return new Promise((resolve, reject) => {
+      Game.findOne({
+        sport: game.sport,
+        startTime: game.startTime,
+      }, (err, game) => {
+        if (err) return reject(err);
+        resolve(game);
+      });
+    });
+  }
 };
 
 export default db;
