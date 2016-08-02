@@ -1,7 +1,7 @@
 - [ ] phone number validation client/app/partials/gameReq..
 - [ ] better layout for mobile
-- [ ] creating game ID for each game for DB
-- [ ] getting games from DB to increment players
-- [ ] setting up threshold check
-- [ ] send comfirmation texts
+- [x] getting games from DB to increment players
+- [x] setting up threshold check
+- [x] send comfirmation texts
+- [ ] send playerCount to client after request sent
 - [ ] handling comfirmation response texts
