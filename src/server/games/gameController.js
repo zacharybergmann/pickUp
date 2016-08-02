@@ -28,6 +28,19 @@ export default {
           return Promise.resolve(newGame);
         }
       })
+      .then(game => {
+        // check if playRequest > minPlayer
+        console.log('player Count: ', game.playRequests);
+        if (helpers.hasEnoughPlayers(game)) {
+          sms.sendScheduledGame({
+            smsNum: gameReq.smsNum,
+            sport: gameReq.sport,
+            gameLoc: 'Stallings',
+            gameTime: gameReq.time
+          });
+        }
+        return Promise.resolve(game);
+      })  
       .then(db.saveGame)
       .then((savedGame) => {
         let gameTime = moment(savedGame.startTime).format('LLLL');
@@ -39,12 +52,6 @@ export default {
         res.status(500).send('error requesting game');
       });
 
-    sms.sendScheduledGame({
-      smsNum: gameReq.smsNum,
-      sport: gameReq.sport,
-      gameLoc: 'Stallings',
-      gameTime: gameReq.time
-    });
-
+    
   }
 }
