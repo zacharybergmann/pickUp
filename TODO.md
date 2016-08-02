@@ -9,3 +9,6 @@
 - [ ] send playerCount to client after request sent
 - [ ] handling comfirmation response texts
 - [ ] geolocation
+- [ ] remove unavailable times from drop down
+- [ ] add maximum game capacity and handling
+- [ ] fix server time issue --move Date creation to client
