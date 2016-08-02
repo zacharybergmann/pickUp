@@ -13,7 +13,9 @@ const helpers = {
     return gameTime;
   },
   hasEnoughPlayers: game => game.playRequests >= game.minPlayers,
-  includesPlayer: (game, smsNum) => game.smsNums.includes(smsNum),
+  includesPlayer: (game, smsNum) => game.smsNums.reduce((included, smsObj) => {
+    return smsObj.smsNum === smsNum || included;
+  }, false),
 };
 
 export default helpers;

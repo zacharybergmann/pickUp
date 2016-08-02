@@ -23,10 +23,10 @@ export default {
           console.log('game found ', foundGame);
           console.log('has Player ', helpers.includesPlayer(foundGame, gameReq.smsNum));
           
-          // if ( helpers.includesPlayer(foundGame, gameReq.smsNum) ) {
-          //   console.error('game already requested.');
-          //   return Promise.resolve(foundGame);
-          // }
+          if ( helpers.includesPlayer(foundGame, gameReq.smsNum) ) {
+            console.error('game already requested.');
+            return Promise.resolve(foundGame);
+          }
           
           foundGame.smsNums.push({smsNum: gameReq.smsNum});
           console.log('smsNums ', foundGame.smsNums);
