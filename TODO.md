@@ -1,3 +1,6 @@
+- [ ] authorize phone numbers not in database
+- [ ] add user schema
+- [ ] dont allow users to add more than one request for same sport and same time
 - [ ] phone number validation client/app/partials/gameReq..
 - [ ] better layout for mobile
 - [x] getting games from DB to increment players
@@ -5,3 +8,4 @@
 - [x] send comfirmation texts
 - [ ] send playerCount to client after request sent
 - [ ] handling comfirmation response texts
+- [ ] geolocation
