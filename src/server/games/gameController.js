@@ -18,29 +18,26 @@ export default {
     });
     // check if game exists in DB
     db.getGame(newGame)
-      .then(game => {
-        if (game) {
-          console.log('game found ', game);
+      .then(foundGame => {
+        if (foundGame) {
+          console.log('game found ', foundGame);
+          foundGame.playRequests += 1
+          return Promise.resolve(foundGame);
         } else {
-          console.log('game not found');
+          console.log('game not found. using newGame ', newGame);
+          return Promise.resolve(newGame);
         }
-        res.send('get game');
+      })
+      .then(db.saveGame)
+      .then((savedGame) => {
+        let gameTime = moment(savedGame.startTime).format('LLLL');
+        console.log('game saved. game time at ', gameTime);
+        res.status(201).json({gameTime: gameTime});
       })
       .catch(err => {
-        console.error('error getting game from db', err)
+        console.error('error saving game ', err)
         res.status(500).send('error requesting game');
-      })
-
-    // db.saveGame(newGame)
-    //   .then((game) => {
-    //     let gameTime = moment(game.startTime).format('LLLL');
-    //     console.log('game saved. game time at ', gameTime);
-    //     res.status(201).json({gameTime: gameTime});
-    //   })
-    //   .catch(err => {
-    //     console.error('error saving game ', err)
-    //     res.status(500).send('error requesting game');
-    //   });
+      });
 
     sms.sendScheduledGame({
       smsNum: gameReq.smsNum,
