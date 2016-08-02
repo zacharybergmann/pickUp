@@ -11,7 +11,7 @@ angular.module('gameReqForm', ['pickUp.services'])
     var gameReq = {};
     $scope.requestGame = function() {
       console.log('requesting Game');
-      gameReq.time = $scope.data.selectedOption.hour;
+      gameReq.time = helpers.createGameTime($scope.data.selectedOption.hour);
       gameReq.smsNum = $scope.smsNum;
       gameReq.sport = $scope.sportInput;
 

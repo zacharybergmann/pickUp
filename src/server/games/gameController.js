@@ -11,7 +11,7 @@ export default {
     
     let newGame = new Game({
       sport: gameReq.sport,
-      startTime: helpers.createGameTime(gameReq.time),
+      startTime: gameReq.time,
       location: 'Stallings',
       minPlayers: 6,
       playRequests: 1,
