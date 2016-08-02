@@ -3,8 +3,8 @@
     <h4 ng-init="getGameTime()" ng-model="game">
       Pick-up game requested for {{ game.gameTime }}
     </h4>
-    <p>There are currently {{ game.playRequests }} players wanting to play {{ game.sport }}.
-    <p>We'll text you @ {{ game.smsNum }} in a few when we have at least {{ game.minPlayers }} players.</p>
+    <p>There <span ng-show="pluralPlayers">are</span><span ng-hide="pluralPlayers">is</span> currently {{ game.playRequests }} player<span ng-show="pluralPlayers">s</span> wanting to play {{ game.sport }}.
+    <p>We'll text you in a few when we have at least {{ game.minPlayers }} players.</p>
     <p>Lace 'em up!</p>
   </div>
 </div>
