@@ -1,5 +1,5 @@
 import sms from '../twilio/sms';
-import Game from './models/game';
+import Game from './gameModel';
 import db from '../mongoose/db';
 import helpers from '../helpers';
 import moment from 'moment';

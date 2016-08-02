@@ -1,4 +1,4 @@
-import Game from '../games/models/game';
+import Game from '../games/gameModel';
 
 const db = {
   saveGame: (game) => {
