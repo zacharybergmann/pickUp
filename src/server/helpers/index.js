@@ -12,6 +12,7 @@ const helpers = {
     );
     return gameTime;
   },
+  hasEnoughPlayers: game => game.playRequests >= game.minPlayers,
 };
 
 export default helpers;
