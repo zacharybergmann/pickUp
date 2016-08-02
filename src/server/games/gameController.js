@@ -14,7 +14,8 @@ export default {
       startTime: helpers.createGameTime(gameReq.time),
       location: 'Stallings',
       minPlayers: 6,
-      playRequests: 1
+      playRequests: 1,
+      smsNums: [{smsNum: gameReq.smsNum}],
     });
     // check if game exists in DB
     db.getGame(newGame)
