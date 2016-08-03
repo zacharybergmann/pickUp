@@ -8,14 +8,18 @@ export default {
   addRequest: (req, res, next) => {
     let gameReq = req.body;
     console.log(gameReq);
-    
+    let smsNum = helpers.phone(gameReq.smsNum);
+    if (!smsNum) {
+      return res.send(400);
+    }
+
     let newGame = new Game({
       sport: gameReq.sport,
       startTime: gameReq.time,
       location: 'Stallings',
       minPlayers: 6,
       playRequests: 1,
-      smsNums: [{smsNum: gameReq.smsNum}],
+      smsNums: [{smsNum: smsNum}],
     });
     // check if game exists in DB
     db.getGame(newGame)

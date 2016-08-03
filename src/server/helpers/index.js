@@ -1,5 +1,6 @@
 import moment from 'moment';
 import crypto from 'crypto';
+import phone from 'phone';
 
 const helpers = {
   createGameTime: (reqTime) => {
@@ -25,6 +26,8 @@ const helpers = {
       cb(smsObj.smsNum);
     });
   },
+
+  phone: num => phone(num)[0],
 
 };
 

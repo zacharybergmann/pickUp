@@ -7,8 +7,8 @@ const sms = {
     // real text
     // return new Promise((resolve, reject) => {
     //   client.sendMessage({
-    //     to: `+1${smsNum}`,
-    //     from: `+1${process.env.TWILIO_NUM}`,
+    //     to: smsNum,
+    //     from: process.env.TWILIO_NUM,
     //     body: message
     //   }, (err, resp) => {
     //     if (err) {
