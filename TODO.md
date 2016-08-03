@@ -1,14 +1,15 @@
 - [ ] authorize phone numbers not in database
-- [ ] add user schema
-- [ ] dont allow users to add more than one request for same sport and same time
 - [ ] phone number validation client/app/partials/gameReq..
 - [ ] better layout for mobile
-- [x] getting games from DB to increment players
-- [x] setting up threshold check
-- [x] send comfirmation texts
-- [ ] send playerCount to client after request sent
 - [ ] handling comfirmation response texts
 - [ ] geolocation
 - [ ] remove unavailable times from drop down
 - [ ] add maximum game capacity and handling
-- [ ] fix server time issue --move Date creation to client
+- [x] server-side phone number validation
+- [x] getting games from DB to increment players
+- [x] setting up threshold check
+- [x] send playerCount to client after request sent
+- [x] send comfirmation texts
+- [x] dont allow users to add more than one request for same sport and same time
+- [x] add user schema
+- [x] fix server time issue --move Date creation to client
