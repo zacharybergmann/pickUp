@@ -1,5 +1,3 @@
-# Pick Up #
-
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
 
@@ -16,34 +14,27 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## PickUp! ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+# PickUp! #
 
 ## PickUp takes the setup out of pick-up games. ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
 Pickup organizes pick-up games automatically for you. You just tell us what you want to play and when and we'll set up a friendly game at a park near you.
 Pick up pools players in your area who would like to play at a certain time and once enough people request a game, we'll send you text giving you the heads up.
 Confirm you're still on to play and with enough confirmations come in from the others, it's Game On!
 
 
 ## Problem ##
-  > Describe the problem your product solves.
   You love playing pick-up soccer, but you hate organzing games. All your friends have different schedules. You can never get enough people for a good game.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
   PickUp does all the organizing for you. People request to play a game at a certain time and pick pools all the people who want to play, say basketball at 3pm today. For a good game you'll need at least 6 players, three to a side. When the sixth person request a basketball game for 3pm, PickUp notifies all interested parties and ask them to confirm via text there willingness to play. The text responses go to PickUp and not each participant, so numbers are not shared. Once all the confirmations come in, PickUp sends another text informing participants of the exact location of the game. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
   "PickUp is the the perfect integration between traditional neighborhood fun and social interaction." - Neal Taylor
 
 ## How to Get Started ##
 PickUp is crazy easy to use:
-  > Describe how easy it is to get started.
 1. Sign up with your phone number (so we can notify you when a game is about to begin).
 2. Select a sport and a time and send in the pick-up game request
 3. Go about your day and receive a text when there are enough requests in for the selected sport and time.
@@ -52,11 +43,9 @@ PickUp is crazy easy to use:
 6. Game Time! Have Fun!
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
   I love playing pick-up soccer, but I can never find enough other people to play. Now I just tell PickUp when I want play and now I can play whenever I want!!
   There always a good squad of players ready to go. No more 2-on-2.
 
 ## Closing and Call to Action ##
 Ready to get you game on?! 
 Download PickUp now!
-  > Wrap it up and give pointers where the reader should go next.
