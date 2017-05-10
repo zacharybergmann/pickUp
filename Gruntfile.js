@@ -23,8 +23,8 @@ grunt.initConfig({
     devServer: {
       command: 'npm run dev'
     },
-    heroku: {
-      command: 'heroku local'
+    prodServer: {
+      command: 'npm start'
     }
   },
   watch: {
@@ -50,17 +50,18 @@ grunt.loadNpmTasks('grunt-contrib-watch');
 // grunt.loadNpmTasks('grunt-contrib-eslint');
 grunt.loadNpmTasks("gruntify-eslint");
 
-grunt.registerTask('heroku', [
+grunt.registerTask('prod', [
   'clean',
   'eslint',
   'babel',
-  'shell:heroku'
+  'shell:prodServer'
 ]);
 
 grunt.registerTask('default', [
   'clean',
   'eslint',
-  'babel'
+  'babel',
+  'shell:prodServer'
 ]);
 
 grunt.registerTask('dev', [
