@@ -53,12 +53,12 @@ grunt.loadNpmTasks("gruntify-eslint");
 grunt.registerTask('heroku', [
   'clean',
   'eslint',
-  'babel'
+  'babel',
+  'shell:heroku'
 ]);
 
 grunt.registerTask('default', [
   'clean',
   'eslint',
-  'babel',
-  'shell:heroku'
+  'babel'
 ]);
