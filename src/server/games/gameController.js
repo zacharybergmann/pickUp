@@ -9,6 +9,7 @@ export default {
     let gameReq = req.body;
     console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
+    let address = (gameReq.address);
     if (!smsNum) {
       return res.send(400);
     }
@@ -19,7 +20,7 @@ export default {
       location: 'Stallings',
       minPlayers: 6,
       playRequests: 1,
-      smsNums: [{smsNum: smsNum}],
+      smsNums: [{smsNum: smsNum, address: address }],
     });
     // check if game exists in DB
     db.getGame(newGame)
@@ -31,7 +32,7 @@ export default {
             console.error('game already requested.');
             return Promise.resolve(foundGame);
           }
-          foundGame.smsNums.push({smsNum: gameReq.smsNum});
+          foundGame.smsNums.push({smsNum: gameReq.smsNum,  address: gameReq.address});
          
           foundGame.playRequests += 1
           return Promise.resolve(foundGame);
