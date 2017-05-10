@@ -62,3 +62,10 @@ grunt.registerTask('default', [
   'eslint',
   'babel'
 ]);
+
+grunt.registerTask('dev', [
+  'clean',
+  'eslint',
+  'babel',
+  'shell:devServer'
+]);
