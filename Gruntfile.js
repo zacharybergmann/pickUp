@@ -54,11 +54,11 @@ grunt.registerTask('heroku', [
   'clean',
   'eslint',
   'babel'
+  'shell:heroku'
 ]);
 
 grunt.registerTask('default', [
   'clean',
   'eslint',
   'babel',
-  'shell:heroku'
 ]);
