@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "grunt default",
+    "start": "grunt default && node dist/server/index.js",
     "dev": "nodemon dist/server/index.js"
   },
   "repository": {
