@@ -4,6 +4,7 @@
   "description": "Organize pick up games without organizing",
   "main": "index.js",
   "scripts": {
+    "postinstall": "grunt default",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "grunt default && node dist/server/index.js",
     "dev": "nodemon dist/server/index.js"
