@@ -4,14 +4,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import gameController from './games/gameController';
 import db from './mongoose/dbConnect';
-import cron from './cron/cronTasks';
-
-// just importing the file starts the tasks
-// cron.start();
-// var CronJob = require('cron').CronJob;
-// new CronJob('* * * * * *', function() {
-//   console.log('You will see this message every second');
-// }, null, true, null);
+import cronMsg from './cron/cronMessageTask';
+import cronDel from './cron/cronDeleteTask';
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
