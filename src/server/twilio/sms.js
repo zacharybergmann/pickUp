@@ -28,7 +28,23 @@ const sms = {
     //   resolve('message sent!');
     // });
   },
-
+  sendError: (smsNum, error) => {
+    return new Promise((resolve, reject) => {
+      client.sendMessage({
+        to: smsNum,
+        from: process.env.TWILIO_NUM,
+        body: error,
+      }, (err, resp) => {
+        if(err) {
+          console.error('Error sending SMS: ', err);
+          reject(err);
+        } else {
+          console.log(resp);
+          resolve(resp);
+        }
+      });
+    });
+  },
 
 };
 
