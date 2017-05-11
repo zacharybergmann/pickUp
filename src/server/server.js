@@ -18,4 +18,14 @@ app.use(express.static(clientDir));
 app.post('/api/games', gameController.addRequest)
 console.log(`client directory: ${clientDir}`)
 
+app.post('/sms', (req, res) => {
+  const twilio = require('twilio');
+  // use req.body.Body    , proven valid to get message text message from user
+  console.log(req.body.Body, 'this is req from twilio');
+  const twiml = new twilio.TwimlResponse();
+  twiml.message('The Robots are coming! Head for the hills!');
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+});
+
 export default app;
