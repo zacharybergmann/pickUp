@@ -6,7 +6,12 @@ import gameController from './games/gameController';
 import db from './mongoose/dbConnect';
 import cron from './cron/cronTasks';
 
-cron.start();
+// just importing the file starts the tasks
+// cron.start();
+// var CronJob = require('cron').CronJob;
+// new CronJob('* * * * * *', function() {
+//   console.log('You will see this message every second');
+// }, null, true, null);
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
