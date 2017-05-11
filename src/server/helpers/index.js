@@ -30,6 +30,11 @@ const helpers = {
 
   phone: num => phone(num)[0],
   
+  findCentralLocation: (game, cb) => {
+    game.smsNums.forEach(users => {
+      cb(users.address); 
+    });
+  }
   // address: (address, cb) => {
   //   geocoder.geocode({'address': address}, (results, status) => {
   //     console.log("RES", results, "STATUS", status);

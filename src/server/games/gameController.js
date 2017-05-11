@@ -55,13 +55,27 @@ export default {
             console.log('GAME is:', game);
             console.log('player Count: ', game.playRequests);
             if (helpers.hasEnoughPlayers(game)) {
+              //combine locations to find central playing field.
+            let newLocation = (game) => {
+              let lngs = 0;
+              let lats = 0;
+              helpers.findCentralLocation(game, (loc)=>{
+                console.log("LOCS INSIDE", loc);
+                lngs += loc.lng;
+                lats += loc.lat;
+            });
+                console.log('AVERAGE LOCATION:', `${lngs/6},${lats/6}`);
+                return(`${lngs/6},${lats/6}`);
+            }  
+            let setLocation = newLocation(game);
               // send to all the players
+              
               helpers.forEachPlayer(game, (num) => {
                 console.log('texting ', num);
                 sms.sendScheduledGame({
                   smsNum: num,
                   sport: gameReq.sport,
-                  gameLoc: 'Stallings',
+                  gameLoc: setLocation,
                   gameTime: gameReq.time
                 });
               })
