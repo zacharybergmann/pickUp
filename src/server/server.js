@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import gameController from './games/gameController';
 import db from './mongoose/dbConnect';
+import cron from './cron/cronTasks';
+
+cron.start();
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
