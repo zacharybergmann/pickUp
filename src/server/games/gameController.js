@@ -11,14 +11,18 @@ export default {
     let gameReq = req.body;
     console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
+    //////////////////James-to-be-refactored///////////////
     geocoder.geocode(gameReq.address, function (err, data) {
       if (err) {
         console.log("Geocode did not respond well", err);
       } else {
         console.log("GEOCODE Data", data.results[0].geometry.location);
-        let address = {lat: data.results[0].geometry.location.lat , 
-                      lng: data.results[0].geometry.location.lng};
+        let address = {
+          lat: data.results[0].geometry.location.lat,
+          lng: data.results[0].geometry.location.lng
+        };
         // address = JSON.stringify(address);
+        /////////////////////////////////////////////////////////////
         if (!smsNum) {
           return res.send(400);
         }
@@ -56,29 +60,34 @@ export default {
             console.log('player Count: ', game.playRequests);
             if (helpers.hasEnoughPlayers(game)) {
               //combine locations to find central playing field.
-            let newLocation = (game) => {
-              let lngs = 0;
-              let lats = 0;
-              helpers.findCentralLocation(game, (loc)=>{
-                console.log("LOCS INSIDE", loc);
-                lngs += loc.lng;
-                lats += loc.lat;
-            });
-                console.log('AVERAGE LOCATION:', `${lngs/6},${lats/6}`);
-                return(`${lngs/6},${lats/6}`);
-            }  
-            let setLocation = newLocation(game);
-              // send to all the players
-              
-              helpers.forEachPlayer(game, (num) => {
-                console.log('texting ', num);
-                sms.sendScheduledGame({
-                  smsNum: num,
-                  sport: gameReq.sport,
-                  gameLoc: setLocation,
-                  gameTime: gameReq.time
+              let newLocation = (game) => {
+                let lngs = 0;
+                let lats = 0;
+                helpers.findCentralLocation(game, (loc) => {
+                  console.log("LOCS INSIDE", loc);
+                  lngs += loc.lng;
+                  lats += loc.lat;
                 });
-              })
+                console.log('AVERAGE LOCATION:', `${lngs / game.playRequests},${lats / game.playRequests}`);
+                return (`${lngs / game.playRequests},${lats / game.playRequests}`);
+              }
+              let setLocation = newLocation(game);
+              console.log(setLocation);
+              setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
+                console.log("AVEAddress:", midAddress);
+                helpers.forEachPlayer(game, (num) => {
+                  console.log('texting ', num);
+                  sms.sendScheduledGame({
+                    smsNum: num,
+                    sport: gameReq.sport,
+                    gameLoc: midAddress,
+                    gameTime: gameReq.time
+                  });
+                })
+              });
+              // send to all the players
+
+
             }
             return Promise.resolve(game);
           })
