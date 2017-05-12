@@ -6,7 +6,7 @@ var timeSlots = _.range(17, 23).map(function (hour) {
   };
 });
 
-angular.module('gameReqForm', ['pickUp.services'])
+angular.module('gameReqForm', ['pickUp.services', 'google.places'])
 .controller('TimeSelectController', function($scope, $location, GameReq, sharedProps) {
     var gameReq = {};
     $scope.requestGame = function() {
