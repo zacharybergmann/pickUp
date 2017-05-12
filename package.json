@@ -38,6 +38,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-shell": "^1.3.0",
     "gruntify-eslint": "^2.0.0",
+    "kelvin-to-fahrenheit": "^1.0.0",
     "load-grunt-tasks": "^3.5.0",
     "moment": "^2.14.1",
     "mongoose": "^4.5.7",
