@@ -5,7 +5,6 @@ import helpers from '../helpers';
 import moment from 'moment';
 import geocoder from 'geocoder';
 
-
 export default {
   addRequest: (req, res, next) => {
     let gameReq = req.body;
@@ -31,7 +30,7 @@ export default {
           sport: gameReq.sport,
           startTime: gameReq.time,
           location: 'Stallings',
-          minPlayers: 6,
+          minPlayers: 2,
           playRequests: 1,
           smsNums: [{ smsNum: smsNum, address: address }],
         });
