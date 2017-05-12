@@ -1,6 +1,7 @@
 import moment from 'moment';
 import crypto from 'crypto';
 import phone from 'phone';
+import geocoder from 'geocoder';
 
 const helpers = {
   createGameTime: (reqTime) => {
@@ -28,6 +29,27 @@ const helpers = {
   },
 
   phone: num => phone(num)[0],
+
+  reverseGeocode: (avgLoc, cb) =>{
+    let geoLng = +avgLoc.split(',')[0];
+    let geoLat = +avgLoc.split(',')[1];
+    console.log("REVERSE AVG:", avgLoc, "TYPE", typeof(avgLoc));
+
+    geocoder.reverseGeocode(geoLat, geoLng, function (err, data) {
+          if (err){
+            console.log("Sorry you had a location error:", err);
+          } else {
+          console.log("DEGEOCODE-TEST", data.results[0].formatted_address);
+           cb(data.results[0].formatted_address);
+        } // do something with data 
+        });
+  }, 
+
+  findCentralLocation: (game, cb) => {
+    game.smsNums.forEach(users => {
+      cb(users.address); 
+    });
+  }
 
 };
 
