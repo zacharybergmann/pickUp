@@ -1,3 +1,5 @@
+// import uiMask from '../lib/angular-ui-mask.js';
+
 var timeSlots = _.range(17, 23).map(function (hour) {
   return {
     id: hour.toString(),
@@ -6,7 +8,7 @@ var timeSlots = _.range(17, 23).map(function (hour) {
   };
 });
 
-angular.module('gameReqForm', ['pickUp.services', 'google.places'])
+angular.module('gameReqForm', ['pickUp.services', 'google.places', 'ui.mask'])
 .controller('TimeSelectController', function($scope, $location, GameReq, sharedProps) {
     var gameReq = {};
     $scope.requestGame = function() {
