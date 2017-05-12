@@ -33,7 +33,9 @@
       <input 
         type="tel"
         class="u-full-width"
-        placeholder="we'll text you soon when a game is available"
+        ui-mask="999-999-9999" 
+        placeholder="(AAA) BBB-CCC"
+        ui-mask-placeholder-char="-"
         id="phone"
         ng-model="smsNum"
         required />
