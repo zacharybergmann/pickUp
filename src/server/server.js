@@ -11,6 +11,7 @@ import cronDel from './cron/cronDeleteTask';
 const chrono = require('chrono-node');
 const twilio = require('twilio');
 const axios = require('axios');
+const stringSimilarity = require('string-similarity');
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
@@ -29,6 +30,7 @@ app.post('/sms', (req, res) => {
   const phoneNum = req.body.From;
   console.log(req.body.From, 'body of request');
   console.log(req.body.Body, 'this is req from twilio');
+  const mes = req.body.Body;
   const date = chrono.parseDate(req.body.Body);
   if(date === null) {
     sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.');
@@ -60,14 +62,14 @@ app.post('/sms', (req, res) => {
     const lattitude = resp.data.latt;
 
     // last step, determine if we can access our sport in the natural text...split text on spaces and see if any stored sports are in this group
-
-    console.log(date, 'date to play our game!');
-    console.log(date.getHours(), 'this is the date in UTC time');
-
-    const twiml = new twilio.TwimlResponse();
-    twiml.message('The Robots are coming! Head for the hills!');
-    res.writeHead(200, {'Content-Type': 'text/xml'});
-    res.end(twiml.toString());
+    const matches = stringSimilarity.findBestMatch('soccer', mes.split(' '));
+    console.log(matches.bestMatch, 'this is match confidence of best match');
+    if(matches.bestMatch < 0.75) {
+      sms.sendError(phoneNum, 'Sorry, we were unable to understand the sport that you want to play. Please send a new request.')
+      return;
+    }
+    sms.sendError(phoneNum, 'Congratulations, you have been added to the game queue. We will let you know when your game is ready!');
+    return;
   }); 
 });
 
