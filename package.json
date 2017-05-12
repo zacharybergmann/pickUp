@@ -47,5 +47,7 @@
     "phone": "^1.0.8",
     "twilio": "^2.9.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "axios": "^0.16.1"
+  }
 }

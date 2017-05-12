@@ -71,4 +71,15 @@ app.post('/sms', (req, res) => {
   }); 
 });
 
+app.get('/weather', (req, res) => {
+  console.log('inside weather')
+  res.send('weather');
+  // axios.get(`api.openweathermap.org/data/2.5/weather?q=NewOrleans&APPID=${process.env.WEATHER_ID}`)
+  // .then((weather) => {
+  //   console.log(weather, 'Weather');
+  // })
+  // .catch((err) => {
+  //   console.error(err, 'Error');
+  // })
+})
 export default app;
