@@ -6,6 +6,7 @@ import db from '../mongoose/db';
 import helpers from '../helpers';
 import moment from 'moment';
 import geocoder from 'geocoder';
+import googleapi from 'google-maps-api';
 
 export default {
   addRequest: (req, res, next) => {
@@ -83,7 +84,7 @@ export default {
                     smsNum: num,
                     sport: gameReq.sport,
                     gameLoc: midAddress,
-                    gameTime: gameReq.time
+                    gameTime: gameReq.time-1
                   });
                 })
               });
