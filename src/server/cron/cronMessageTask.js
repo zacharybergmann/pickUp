@@ -7,7 +7,7 @@ const cron = require('node-cron');
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 let time = new Date();
-let checkTime = `${time.getFullYear()}-0${time.getMonth()+1}-${time.getDate()}T${time.getHours()+3}:00:00.000Z`
+let checkTime = `${time.getFullYear()}-0${time.getMonth()+1}-${time.getDate()}T${time.getHours()}:00:00.000Z`
 
 cron.schedule('*/30 * * * *', () => {
   console.log(checkTime, 'check time')
