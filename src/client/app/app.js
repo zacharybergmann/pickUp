@@ -1,4 +1,4 @@
-angular.module('pickUp', ['ui.router', 'gameReqForm', 'games', 'ui.mask'])
+angular.module('pickUp', ['ui.router', 'gameReqForm', 'games'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/index');
