@@ -31,13 +31,13 @@ app.post('/sms', (req, res) => {
   console.log(req.body.Body, 'this is req from twilio');
   const date = chrono.parseDate(req.body.Body);
   if(date === null) {
-    sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.')
+    sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.');
     //send message with Twilio back to user for failed attempt handling date!
     return;
   }
   axios.get(`http://geocoder.ca/${req.body.Body}?json=1?auth=10301591512318965`).then(resp => {
     if(resp.error) {
-      // send failure message to user regarding address being unusable
+      sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.')
       return;
     }
     // this is format of resp.data
