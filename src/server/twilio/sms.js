@@ -1,32 +1,32 @@
 import twilio from 'twilio';
 import moment from 'moment';
+import axios from 'axios';
+import temp from 'kelvin-to-fahrenheit'
 
 const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 const sms = {
   sendScheduledGame: ({smsNum, gameLoc, gameTime, sport}) => {
-    let message = `we're playing ${sport} @ ${gameLoc} for ${moment(gameTime).format('llll')}. You in?`;
-    console.log('sending message: ', message);
     // real text
-    return new Promise((resolve, reject) => {
-      client.sendMessage({
-        to: smsNum,
-        from: process.env.TWILIO_NUM,
-        body: message
-      }, (err, resp) => {
-        if (err) {
-          console.error('Error sending SMS: ', err);
-          reject(err);
-        } else {
-          console.log(resp);
-          resolve(resp);
-        }
-      });
-    });
-
-    //test
-    // return new Promise((resolve, reject) => {
-    //   resolve('message sent!');
-    // });
+    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=NewOrleans&APPID=${process.env.WEATHER_ID}`)
+      .then((weather) => {
+        let currentTemp = temp(weather.data.main.temp)
+        let message = `We're playing ${sport} @ ${gameLoc} for ${moment(gameTime).format('llll')}. Expect ${weather.data.weather[0].main} and a Temp of ${currentTemp}°F. See you there!`;
+        return new Promise((resolve, reject) => {
+          client.sendMessage({
+            to: smsNum,
+            from: process.env.TWILIO_NUM,
+            body: message
+          }, (err, resp) => {
+            if (err) {
+              console.error('Error sending SMS: ', err);
+              reject(err);
+            } else {
+              console.log(resp);
+              resolve(resp);
+            }
+          });
+        });
+    })
   },
   sendError: (smsNum, error) => {
     return new Promise((resolve, reject) => {
