@@ -21,7 +21,6 @@ export default {
       if (err) {
         // console.log("Geocode did not respond well", err);
       } else {
-        // console.log("GEOCODE Data", data.results[0].geometry.location);
         let address = {
           lat: data.results[0].geometry.location.lat,
           lng: data.results[0].geometry.location.lng
