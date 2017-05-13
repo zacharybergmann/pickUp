@@ -13,6 +13,8 @@ const twilio = require('twilio');
 const axios = require('axios');
 const stringSimilarity = require('string-similarity');
 
+const sports = ['soccer', 'basketball', 'baseball', 'football', 'volleyball'];
+
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
 
@@ -62,14 +64,28 @@ app.post('/sms', (req, res) => {
     const lattitude = resp.data.latt;
 
     // last step, determine if we can access our sport in the natural text...split text on spaces and see if any stored sports are in this group
-    const matches = stringSimilarity.findBestMatch('soccer', mes.split(' '));
-    console.log(matches.bestMatch, 'this is match confidence of best match');
-    if(matches.bestMatch < 0.75) {
+    const sportConfidence = [];
+    sports.forEach(sport => {
+      sportConfidence.push({
+        sport: sport,
+        confidence: stringSimilarity.findBestMatch(sport, mes.split(' ')).bestMatch.rating,
+      });
+    });
+    console.log(sportConfidence, 'sport confidence array');
+    const mostLikelySport = sportConfidence.reduce((bestSoFar, sportObj) =>
+      bestSoFar === null || sportObj.confidence > bestSoFar.confidence ? sportObj : bestSoFar
+    , null);
+    console.log(mostLikelySport, 'the most likely sport we have');
+    // const matches = stringSimilarity.findBestMatch('soccer', mes.split(' '));
+    // console.log(matches.bestMatch, 'this is match confidence of best match');
+    if(mostLikelySport.confidence < 0.70) {
       sms.sendError(phoneNum, 'Sorry, we were unable to understand the sport that you want to play. Please send a new request.')
+      res.send(400);
       return;
     }
+    //call a function to add this all to DB!
     sms.sendError(phoneNum, 'Congratulations, you have been added to the game queue. We will let you know when your game is ready!');
-    return;
+    res.send(200);
   }); 
 });
 
