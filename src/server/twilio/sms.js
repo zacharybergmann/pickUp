@@ -9,6 +9,7 @@ const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 const sms = {
   sendScheduledGame: ({smsNum, gameLoc, gameTime, sport}) => {
     // real text
+    console.log("HITTING Twilio");
     axios.get(`http://api.openweathermap.org/data/2.5/weather?q=NewOrleans&APPID=${process.env.WEATHER_ID}`)
       .then((weather) => {
         let currentTemp = temp(weather.data.main.temp)
