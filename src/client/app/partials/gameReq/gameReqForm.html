@@ -10,7 +10,12 @@
     <div class="offset-by-three six columns">
       <label for="sportInput">Sport</label>
       <select class="u-full-width" id="sportInput" ng-model="sportInput" required>
+        <option value="" >Pick A Sport!</option>
         <option value="soccer" >Soccer</option>
+        <option value="basketball" >Basketball</option>
+        <option value="baseball" >Baseball</option>
+        <option value="football" >Football</option>
+        <option value="volleyball" >Volleyball</option>
       </select>
     </div>
   </div> <!-- end of row  -->
@@ -20,7 +25,7 @@
       <input 
         type="tel"
         class="u-full-width"
-        placeholder="please give us the address with city and state"
+        placeholder="Please give us the address with city and state."
         g-places-autocomplete
         id="address"
         ng-model="ngAddress"
@@ -34,7 +39,7 @@
         type="tel"
         class="u-full-width"
         ui-mask="999-999-9999" 
-        placeholder="(AAA) BBB-CCC"
+        placeholder="XXX-XXX-XXXX"
         ui-mask-placeholder-char="-"
         id="phone"
         ng-model="smsNum"
