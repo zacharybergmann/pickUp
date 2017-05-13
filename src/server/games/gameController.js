@@ -11,6 +11,9 @@ export default {
     console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
     //////////////////James-to-be-refactored///////////////
+    if(typeof gameReq.address !== 'string'){
+      gameReq.address = gameReq.address.formatted_address;
+    }
     geocoder.geocode(gameReq.address, function (err, data) {
       if (err) {
         console.log("Geocode did not respond well", err);
