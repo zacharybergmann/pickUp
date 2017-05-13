@@ -14,6 +14,8 @@ cron.schedule('30 * * * *', () => {
   Game.find({ 'startTime': checkTime }, 'sport minPlayers startTime playRequests smsNums', (err, games) => {
     if (err) {
       console.error(err, 'Error');
+    } else if (games.length === 0) {
+      return;
     } else {
       if (games[0].minPlayers <= games[0].playRequests) {
         games[0].smsNums.forEach((num, index) => {
