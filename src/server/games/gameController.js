@@ -6,7 +6,8 @@ import db from '../mongoose/db';
 import helpers from '../helpers';
 import moment from 'moment';
 import geocoder from 'geocoder';
-import googleapi from 'google-maps-api';
+import axios from 'axios';
+
 
 export default {
   addRequest: (req, res, next) => {
@@ -75,19 +76,43 @@ export default {
                 return (`${lngs / game.playRequests},${lats / game.playRequests}`);
               }
               let setLocation = newLocation(game);
-              // console.log(setLocation);
               setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
-                // console.log("AVEAddress:", midAddress);
+              console.log('AVERAGE LOC', setLocation);
+                ///////////////////////
+                let reverseStringCoords = (str) => str.split(',').reverse().join();
+                let revCoords = reverseStringCoords(setLocation);
+                console.log(revCoords);
+                let config = {
+                  params:{'location': revCoords, //30.03158509999999,-90.02438749999999,
+                            'radius': '500',
+                            'type': 'park',
+                            'key':  process.env.GOOGLE_GEOCODE_API
+                  }
+                }
+              axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
+              // axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${setLocation}&radius=1000&type=park&keyword=&key=AIzaSyDvobyVzg7zgmXhuQedKd1cMFkOD92RLDk')
+                .then((res) => {
+                  console.log('RESPONSE', res.data.results[0],res.data.results[0].geometry);
+                  console.log('LAT TEST', res.data.results[0].geometry.location.lat, 'TYPE', typeof(res.data.results[0].geometry.location.lat));
+                  let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
+                  console.log('NEAREST PARKS', nearestParkCoords, 'TYPE', typeof(nearestParkCoords) );
+                  setLocation = nearestParkCoords;
+                 
+            // })
+                //////////////////////////////////////////////////
+              setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
+                console.log('AVEAddress:', midAddress);
                 helpers.forEachPlayer(game, (num) => {
                   // console.log('texting ', num);
                   sms.sendScheduledGame({
                     smsNum: num,
                     sport: gameReq.sport,
                     gameLoc: midAddress,
-                    gameTime: gameReq.time-1
+                    gameTime: gameReq.time
                   });
                 })
-              });
+              })  
+            });
               // send to all the players
 
 
