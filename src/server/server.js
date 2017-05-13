@@ -37,11 +37,13 @@ app.post('/sms', (req, res) => {
   if(date === null) {
     sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.');
     //send message with Twilio back to user for failed attempt handling date!
+    res.send(500);
     return;
   }
   axios.get(`http://geocoder.ca/${req.body.Body}?json=1?auth=10301591512318965`).then(resp => {
     if(resp.error) {
-      sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.')
+      sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.');
+      res.send(500);
       return;
     }
     // this is format of resp.data
@@ -80,10 +82,15 @@ app.post('/sms', (req, res) => {
     // console.log(matches.bestMatch, 'this is match confidence of best match');
     if(mostLikelySport.confidence < 0.70) {
       sms.sendError(phoneNum, 'Sorry, we were unable to understand the sport that you want to play. Please send a new request.')
-      res.send(400);
+      res.send(500);
       return;
     }
     //call a function to add this all to DB!
+
+    console.log(mostLikelySport, date, +lattitude, +longitude, phoneNum, 'the whole shebang');
+    gameController.addGameTextMode({ sport: mostLikelySport.sport, time: date, smsNum: phoneNum }, { lat: +lattitude, lng: +longitude }, phoneNum);
+
+
     sms.sendError(phoneNum, 'Congratulations, you have been added to the game queue. We will let you know when your game is ready!');
     res.send(200);
   }); 
