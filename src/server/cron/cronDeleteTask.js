@@ -4,7 +4,7 @@ import Game from '../games/gameModel';
 
 const cron = require('node-cron');
 
-cron.schedule('30 * * * *', () => {
+cron.schedule('35 * * * *', () => {
   let time = new Date();
   let checkTime = `${time.getFullYear()}-0${time.getMonth()+1}-${time.getDate()}T${time.getHours()}:00:00.000Z`;
   console.log(checkTime, 'checkTime in delete task file')
