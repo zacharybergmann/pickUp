@@ -11,7 +11,7 @@ export default {
     console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
     //////////////////James-to-be-refactored///////////////
-    if(typeof gameReq.address !== 'string'){
+    if(typeof gameReq.address !== 'string') {
       gameReq.address = gameReq.address.formatted_address;
     }
     geocoder.geocode(gameReq.address, function (err, data) {
@@ -106,5 +106,82 @@ export default {
     })
 
 
-  }
+  },
+
+
+  addGameTextMode(gameReq, address, smsNum) {
+    let newGame = new Game({
+      sport: gameReq.sport,
+      startTime: gameReq.time,
+      location: 'Stallings',
+      minPlayers: 2,
+      playRequests: 1,
+      smsNums: [{ smsNum: smsNum, address: address }],
+    });
+    // check if game exists in DB
+    db.getGame(newGame)
+      .then(foundGame => {
+        if (foundGame) {
+          console.log('game found ');
+
+          if (helpers.includesPlayer(foundGame, gameReq.smsNum)) {
+            console.error('game already requested.');
+            return Promise.resolve(foundGame);
+          }
+          foundGame.smsNums.push({ smsNum: gameReq.smsNum, address: address });
+
+          foundGame.playRequests += 1
+          return Promise.resolve(foundGame);
+        } else {
+          console.log('game not found. using newGame ');
+          return Promise.resolve(newGame);
+        }
+      })
+      .then(game => {
+        // check if playRequest > minPlayer
+        console.log('GAME is:', game);
+        console.log('player Count: ', game.playRequests);
+        if (helpers.hasEnoughPlayers(game)) {
+          //combine locations to find central playing field.
+          let newLocation = (game) => {
+            let lngs = 0;
+            let lats = 0;
+            helpers.findCentralLocation(game, (loc) => {
+              console.log("LOCS INSIDE", loc);
+              lngs += loc.lng;
+              lats += loc.lat;
+            });
+            console.log('AVERAGE LOCATION:', `${lngs / game.playRequests},${lats / game.playRequests}`);
+            return (`${lngs / game.playRequests},${lats / game.playRequests}`);
+          }
+          let setLocation = newLocation(game);
+          console.log(setLocation);
+          setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
+            console.log("AVEAddress:", midAddress);
+            helpers.forEachPlayer(game, (num) => {
+              console.log('texting ', num);
+              sms.sendScheduledGame({
+                smsNum: num,
+                sport: gameReq.sport,
+                gameLoc: midAddress,
+                gameTime: gameReq.time
+              });
+            })
+          });
+          // send to all the players
+
+
+        }
+        return Promise.resolve(game);
+      })
+      .then(db.saveGame)
+      .then((savedGame) => {
+        console.log('game saved!')
+      })
+      .catch(err => {
+        console.error('error saving game ', err)
+      });
+  },
+
+
 }
