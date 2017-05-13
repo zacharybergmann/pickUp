@@ -1,3 +1,5 @@
+require('dotenv').config();
+import moment from 'moment';
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
@@ -12,6 +14,8 @@ const chrono = require('chrono-node');
 const twilio = require('twilio');
 const axios = require('axios');
 const stringSimilarity = require('string-similarity');
+
+const sports = ['soccer', 'basketball', 'baseball', 'football', 'volleyball'];
 
 const app = express();
 let clientDir = path.join(__dirname, '../../src/client')
@@ -28,48 +32,63 @@ console.log(`client directory: ${clientDir}`)
 
 app.post('/sms', (req, res) => {
   const phoneNum = req.body.From;
-  console.log(req.body.From, 'body of request');
-  console.log(req.body.Body, 'this is req from twilio');
+  // console.log(req.body.From, 'body of request');
   const mes = req.body.Body;
-  const date = chrono.parseDate(req.body.Body);
+  console.log('this is message', mes);
+  var guessPMRefiner = new chrono.Refiner();
+  guessPMRefiner.refine = function(text, results, opt) {
+      results.forEach(function (result) {
+          if (!result.start.isCertain('meridiem') 
+              &&  result.start.get('hour') >= 1 && result.start.get('hour') < 4) {
+              
+              result.start.assign('meridiem', 1);
+              result.start.assign('hour', result.start.get('hour') + 12);
+          }
+      });
+      return results;
+  } 
+  var custom = new chrono.Chrono();
+  custom.refiners.push(guessPMRefiner);
+  const date = custom.parseDate(mes);
+  let readable = date.toString();
+  console.log(date, 'this is date and time')
+  
   if(date === null) {
     sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.');
-    //send message with Twilio back to user for failed attempt handling date!
+    res.send(500);
     return;
   }
   axios.get(`http://geocoder.ca/${req.body.Body}?json=1?auth=10301591512318965`).then(resp => {
     if(resp.error) {
-      sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.')
+      sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.');
+      res.send(500);
       return;
     }
-    // this is format of resp.data
-    // { standard:
-    //   { staddress: 'I Want To Play Soccer Today At I Live At 748 Camp',
-    //     stnumber: '6',
-    //     postal: '70115',
-    //     street1: 'I WANT TO PLAY SOCCER TODAY AT 6PM. I LIVE  ',
-    //     city: 'New Orleans',
-    //     prov: 'LA',
-    //     street2: '748 CAMP ST  ',
-    //     confidence: '0.8'
-    //   },
-    //   longt: '-90.084453',
-    //   TimeZone: 'America/Chicago',
-    //   AreaCode: '504',
-    //   latt: '29.926336' 
-    // }
+
     const longitude = resp.data.longt;
     const lattitude = resp.data.latt;
 
-    // last step, determine if we can access our sport in the natural text...split text on spaces and see if any stored sports are in this group
-    const matches = stringSimilarity.findBestMatch('soccer', mes.split(' '));
-    console.log(matches.bestMatch, 'this is match confidence of best match');
-    if(matches.bestMatch < 0.75) {
+    const sportConfidence = [];
+    sports.forEach(sport => {
+      sportConfidence.push({
+        sport: sport,
+        confidence: stringSimilarity.findBestMatch(sport, mes.split(' ')).bestMatch.rating,
+      });
+    });
+
+    const mostLikelySport = sportConfidence.reduce((bestSoFar, sportObj) =>
+      bestSoFar === null || sportObj.confidence > bestSoFar.confidence ? sportObj : bestSoFar
+    , null);
+    if(mostLikelySport.confidence < 0.70) {
       sms.sendError(phoneNum, 'Sorry, we were unable to understand the sport that you want to play. Please send a new request.')
+      res.send(500);
       return;
     }
+
+    gameController.addGameTextMode({ sport: mostLikelySport.sport, time: date, smsNum: phoneNum }, { lat: +lattitude, lng: +longitude }, phoneNum);
+
     sms.sendError(phoneNum, 'Congratulations, you have been added to the game queue. We will let you know when your game is ready!');
-    return;
+    res.send(200);
   }); 
 });
 

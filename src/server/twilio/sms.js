@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import twilio from 'twilio';
 import moment from 'moment';
 import axios from 'axios';
@@ -11,6 +13,7 @@ const sms = {
       .then((weather) => {
         let currentTemp = temp(weather.data.main.temp)
         let message = `We're playing ${sport} @ ${gameLoc} for ${moment(gameTime).format('llll')}. Expect ${weather.data.weather[0].main} and a Temp of ${currentTemp}°F. See you there!`;
+        console.log('helol weather console log 1');
         return new Promise((resolve, reject) => {
           client.sendMessage({
             to: smsNum,
@@ -21,12 +24,12 @@ const sms = {
               console.error('Error sending SMS: ', err);
               reject(err);
             } else {
-              console.log(resp);
+              console.log(resp, 'weather console .log 2');
               resolve(resp);
             }
           });
         });
-    })
+    }).catch(err => console.error(err));
   },
   sendError: (smsNum, error) => {
     return new Promise((resolve, reject) => {
