@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import sms from '../twilio/sms';
 import Game from './gameModel';
 import db from '../mongoose/db';
@@ -8,27 +10,26 @@ import geocoder from 'geocoder';
 export default {
   addRequest: (req, res, next) => {
     let gameReq = req.body;
-    console.log(gameReq);
+    // console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
-    //////////////////James-to-be-refactored///////////////
+    // TODO: james refactor
     if(typeof gameReq.address !== 'string') {
       gameReq.address = gameReq.address.formatted_address;
     }
     geocoder.geocode(gameReq.address, function (err, data) {
       if (err) {
-        console.log("Geocode did not respond well", err);
+        // console.log("Geocode did not respond well", err);
       } else {
-        console.log("GEOCODE Data", data.results[0].geometry.location);
+        // console.log("GEOCODE Data", data.results[0].geometry.location);
         let address = {
           lat: data.results[0].geometry.location.lat,
           lng: data.results[0].geometry.location.lng
         };
         // address = JSON.stringify(address);
-        /////////////////////////////////////////////////////////////
         if (!smsNum) {
           return res.send(400);
         }
-        console.log("ADDRESS", address);
+        // console.log("ADDRESS", address);
         let newGame = new Game({
           sport: gameReq.sport,
           startTime: gameReq.time,
@@ -41,9 +42,9 @@ export default {
         db.getGame(newGame)
           .then(foundGame => {
             if (foundGame) {
-              console.log('game found ');
+              // console.log('game found ');
               if (helpers.includesPlayer(foundGame, gameReq.smsNum)) {
-                console.error('game already requested.');
+                // console.error('game already requested.');
                 return Promise.resolve(foundGame);
               }
               foundGame.smsNums.push({ smsNum: gameReq.smsNum, address: address });
@@ -51,33 +52,33 @@ export default {
               foundGame.playRequests += 1
               return Promise.resolve(foundGame);
             } else {
-              console.log('game not found. using newGame ');
+              // console.log('game not found. using newGame ');
               return Promise.resolve(newGame);
             }
           })
           .then(game => {
             // check if playRequest > minPlayer
-            console.log('GAME is:', game);
-            console.log('player Count: ', game.playRequests);
+            // console.log('GAME is:', game);
+            // console.log('player Count: ', game.playRequests);
             if (helpers.hasEnoughPlayers(game)) {
               //combine locations to find central playing field.
               let newLocation = (game) => {
                 let lngs = 0;
                 let lats = 0;
                 helpers.findCentralLocation(game, (loc) => {
-                  console.log("LOCS INSIDE", loc);
+                  // console.log("LOCS INSIDE", loc);
                   lngs += loc.lng;
                   lats += loc.lat;
                 });
-                console.log('AVERAGE LOCATION:', `${lngs / game.playRequests},${lats / game.playRequests}`);
+                // console.log('AVERAGE LOCATION:', `${lngs / game.playRequests},${lats / game.playRequests}`);
                 return (`${lngs / game.playRequests},${lats / game.playRequests}`);
               }
               let setLocation = newLocation(game);
-              console.log(setLocation);
+              // console.log(setLocation);
               setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
-                console.log("AVEAddress:", midAddress);
+                // console.log("AVEAddress:", midAddress);
                 helpers.forEachPlayer(game, (num) => {
-                  console.log('texting ', num);
+                  // console.log('texting ', num);
                   sms.sendScheduledGame({
                     smsNum: num,
                     sport: gameReq.sport,
@@ -139,8 +140,8 @@ export default {
       })
       .then(game => {
         // check if playRequest > minPlayer
-        console.log('GAME is:', game);
-        console.log('player Count: ', game.playRequests);
+        // console.log('GAME is:', game);
+        // console.log('player Count: ', game.playRequests);
         if (helpers.hasEnoughPlayers(game)) {
           //combine locations to find central playing field.
           let newLocation = (game) => {

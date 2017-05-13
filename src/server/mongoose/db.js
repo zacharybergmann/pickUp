@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import Game from '../games/gameModel';
 
 const db = {

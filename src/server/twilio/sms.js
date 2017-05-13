@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 import twilio from 'twilio';
 import moment from 'moment';
 import axios from 'axios';
