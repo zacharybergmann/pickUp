@@ -8,7 +8,6 @@ import moment from 'moment';
 import geocoder from 'geocoder';
 import axios from 'axios';
 
-
 export default {
   addRequest: (req, res, next) => {
     let gameReq = req.body;
@@ -36,7 +35,7 @@ export default {
           sport: gameReq.sport,
           startTime: gameReq.time,
           location: 'Stallings',
-          minPlayers: 2,
+          minPlayers: 1,
           playRequests: 1,
           smsNums: [{ smsNum: smsNum, address: address }],
         });
@@ -93,6 +92,8 @@ export default {
               // axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${setLocation}&radius=1000&type=park&keyword=&key=AIzaSyDvobyVzg7zgmXhuQedKd1cMFkOD92RLDk')
                 .then((res) => {
                   console.log('RESPONSE', res.data.results[0],res.data.results[0].geometry);
+                  let RESPONSEName = res.data.results[0].name;
+                  console.log("NAME", RESPONSEName);
                   console.log('LAT TEST', res.data.results[0].geometry.location.lat, 'TYPE', typeof(res.data.results[0].geometry.location.lat));
                   let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
                   console.log('NEAREST PARKS', nearestParkCoords, 'TYPE', typeof(nearestParkCoords) );
@@ -107,7 +108,7 @@ export default {
                   sms.sendScheduledGame({
                     smsNum: num,
                     sport: gameReq.sport,
-                    gameLoc: midAddress,
+                    gameLoc: `${RESPONSEName}-${midAddress}`,
                     gameTime: gameReq.time
                   });
                 })
@@ -131,8 +132,6 @@ export default {
       }
 
     })
-
-
   },
 
 
@@ -209,6 +208,4 @@ export default {
         console.error('error saving game ', err)
       });
   },
-
-
 }
