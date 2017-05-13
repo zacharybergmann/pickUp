@@ -14,7 +14,7 @@ export default {
     // console.log(gameReq);
     let smsNum = helpers.phone(gameReq.smsNum);
     // TODO: james refactor
-    if(typeof gameReq.address !== 'string') {
+    if (typeof gameReq.address !== 'string') {
       gameReq.address = gameReq.address.formatted_address;
     }
     geocoder.geocode(gameReq.address, function (err, data) {
@@ -75,47 +75,59 @@ export default {
               }
               let setLocation = newLocation(game);
               setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
-              console.log('AVERAGE LOC', setLocation);
+                console.log('AVERAGE LOC', setLocation);
                 ///////////////////////
                 let reverseStringCoords = (str) => str.split(',').reverse().join();
                 let revCoords = reverseStringCoords(setLocation);
                 console.log(revCoords);
                 let config = {
-                  params:{'location': revCoords, //30.03158509999999,-90.02438749999999,
-                            'radius': '500',
-                            'type': 'park',
-                            'key':  process.env.GOOGLE_GEOCODE_API
+                  params: {
+                    'location': revCoords, //30.03158509999999,-90.02438749999999,
+                    'radius': '500',
+                    'type': 'park',
+                    'key': process.env.GOOGLE_GEOCODE_API
                   }
                 }
-              axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
-              // axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${setLocation}&radius=1000&type=park&keyword=&key=AIzaSyDvobyVzg7zgmXhuQedKd1cMFkOD92RLDk')
-                .then((res) => {
-                  console.log('RESPONSE', res.data.results[0],res.data.results[0].geometry);
-                  let RESPONSEName = res.data.results[0].name;
-                  console.log("NAME", RESPONSEName);
-                  console.log('LAT TEST', res.data.results[0].geometry.location.lat, 'TYPE', typeof(res.data.results[0].geometry.location.lat));
-                  let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
-                  console.log('NEAREST PARKS', nearestParkCoords, 'TYPE', typeof(nearestParkCoords) );
-                  setLocation = nearestParkCoords;
-                 
-            // })
-                //////////////////////////////////////////////////
-              setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
-                console.log('AVEAddress:', midAddress);
-                helpers.forEachPlayer(game, (num) => {
-                  // console.log('texting ', num);
-                  sms.sendScheduledGame({
-                    smsNum: num,
-                    sport: gameReq.sport,
-                    gameLoc: `${RESPONSEName}-${midAddress}`,
-                    gameTime: gameReq.time
+                axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
+                  // axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${setLocation}&radius=1000&type=park&keyword=&key=AIzaSyDvobyVzg7zgmXhuQedKd1cMFkOD92RLDk')
+                  .then((res) => {
+                    console.log('RESPONSE', res.data.results[0], res.data.results[0].geometry);
+                    let RESPONSEName = res.data.results[0].name;
+                    console.log("NAME", RESPONSEName);
+                    console.log('LAT TEST', res.data.results[0].geometry.location.lat, 'TYPE', typeof (res.data.results[0].geometry.location.lat));
+                    let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
+                    console.log('NEAREST PARKS', nearestParkCoords, 'TYPE', typeof (nearestParkCoords));
+                    setLocation = nearestParkCoords;
+                    setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
+                      console.log('AVEAddress:', midAddress);
+                      helpers.forEachPlayer(game, (num) => {
+                        // console.log('texting ', num);
+                        sms.sendScheduledGame({
+                          smsNum: num,
+                          sport: gameReq.sport,
+                          gameLoc: `${RESPONSEName}-${midAddress}`,
+                          gameTime: gameReq.time
+                        });
+                      })
+                    })
                   });
+
+                // })
+                //////////////////////////////////////////////////
+                setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
+                  console.log('AVEAddress:', midAddress);
+                  helpers.forEachPlayer(game, (num) => {
+                    console.log('texting ', num);
+                    sms.sendScheduledGame({
+                      smsNum: num,
+                      sport: gameReq.sport,
+                      gameLoc: `${RESPONSEName}-${midAddress}`,
+                      gameTime: gameReq.time
+                    });
+                  })
                 })
-              })  
-            });
+              });
               // send to all the players
-
-
             }
             return Promise.resolve(game);
           })
@@ -127,9 +139,7 @@ export default {
             console.error('error saving game ', err)
             res.status(500).send('error requesting game');
           });
-
       }
-
     })
   },
 
