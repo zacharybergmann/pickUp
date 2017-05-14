@@ -11,6 +11,7 @@ import axios from 'axios';
 export default {
   addRequest: (req, res, next) => {
     let gameReq = req.body;
+    console.log(gameReq, 'game request');
     let smsNum = helpers.phone(gameReq.smsNum);
     // TODO: james refactor
     if (typeof gameReq.address !== 'string') {
@@ -77,7 +78,7 @@ export default {
                   let RESPONSEName = res.data.results[0].name;
                   let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
                   setLocation = nearestParkCoords;
-                  setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
+                  setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
                     helpers.forEachPlayer(game, (num) => {
                       sms.sendScheduledGame({
                         smsNum: num,
@@ -87,19 +88,6 @@ export default {
                       });
                     })
                   });
-
-                  setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
-                    console.log('AVEAddress:', midAddress);
-                    helpers.forEachPlayer(game, (num) => {
-                      console.log('texting ', num);
-                      sms.sendScheduledGame({
-                        smsNum: num,
-                        sport: gameReq.sport,
-                        gameLoc: `${RESPONSEName}-${midAddress}`,
-                        gameTime: gameReq.time
-                      });
-                    })
-                  })
                 });
             }
             return Promise.resolve(game);
@@ -168,8 +156,9 @@ export default {
             .then((res) => {
               let RESPONSEName = res.data.results[0].name;
               let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
+              
               setLocation = nearestParkCoords;
-              setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
+              setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
                 helpers.forEachPlayer(game, (num) => {
                   sms.sendScheduledGame({
                     smsNum: num,
@@ -179,20 +168,7 @@ export default {
                   });
                 })
               });
-
-              setLocation = helpers.reverseGeocode(setLocation, (midAddress, midAddressName) => {
-                console.log('AVEAddress:', midAddress);
-                helpers.forEachPlayer(game, (num) => {
-                  console.log('texting ', num);
-                  sms.sendScheduledGame({
-                    smsNum: num,
-                    sport: gameReq.sport,
-                    gameLoc: `${RESPONSEName}-${midAddress}`,
-                    gameTime: gameReq.time
-                  });
-                })
-              })
-            });
+            });  
         }
         return Promise.resolve(game);
       })
@@ -205,83 +181,4 @@ export default {
         res.status(500).send('error requesting game');
       });
   }
-  // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //     let newGame = new Game({
-  //       sport: gameReq.sport,
-  //       startTime: gameReq.time,
-  //       location: 'Stallings',
-  //       minPlayers: 2,
-  //       playRequests: 1,
-  //       smsNums: [{ smsNum: smsNum, address: address }],
-  //     });
-  //     db.getGame(newGame)
-  //       .then(foundGame => {
-  //         if (foundGame) {
-  //           if (helpers.includesPlayer(foundGame, gameReq.smsNum)) {
-  //             console.error('game already requested.');
-  //             return Promise.resolve(foundGame);
-  //           }
-  //           foundGame.smsNums.push({ smsNum: gameReq.smsNum, address: address });
-
-  //           foundGame.playRequests += 1
-  //           return Promise.resolve(foundGame);
-  //         } else {
-  //           return Promise.resolve(newGame);
-  //         }
-  //       })
-  //       .then(game => {
-  //         if (helpers.hasEnoughPlayers(game)) {
-  //           console.log("Let the games begin");
-  //           let newLocation = (game) => {
-  //             let lngs = 0;
-  //             let lats = 0;
-  //             helpers.findCentralLocation(game, (loc) => {
-  //               lngs += loc.lng;
-  //               lats += loc.lat;
-  //             });
-  //             return (`${lngs / game.playRequests},${lats / game.playRequests}`);
-  //           }
-  //           let setLocation = newLocation(game);
-  //           setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
-  //             helpers.forEachPlayer(game, (num) => {
-  //               sms.sendScheduledGame({
-  //                 smsNum: num,
-  //                 sport: gameReq.sport,
-  //                 gameLoc: midAddress,
-  //                 gameTime: gameReq.time
-  //               });
-  //             })
-  //           });
-  //         }
-  //         return Promise.resolve(game);
-  //       })
-  //       .then(db.saveGame)
-  //       .then((savedGame) => {
-  //         console.warn('game saved!')
-  //       })
-  //       .catch(err => {
-  //         console.error('error saving game ', err)
-  //       });
-  // },
 }

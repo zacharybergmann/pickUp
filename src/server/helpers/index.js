@@ -52,8 +52,8 @@ const helpers = {
   },
 
   findCentralLocation: (game, cb) => {
-    game.smsNums.forEach(users => {
-      cb(users.address);
+    game.smsNums.forEach(user => {
+      cb(user.address);
     });
   }
 
