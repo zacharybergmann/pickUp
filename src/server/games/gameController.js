@@ -84,7 +84,7 @@ export default {
                         smsNum: num,
                         sport: gameReq.sport,
                         gameLoc: `${RESPONSEName}-${midAddress}`,
-                        gameTime: gameReq.time
+                        gameTime: moment(gameReq.time)
                       });
                     })
                   });
@@ -164,7 +164,7 @@ export default {
                     smsNum: num,
                     sport: gameReq.sport,
                     gameLoc: `${RESPONSEName}-${midAddress}`,
-                    gameTime: gameReq.time
+                    gameTime: moment(gameReq.time)
                   });
                 })
               });
