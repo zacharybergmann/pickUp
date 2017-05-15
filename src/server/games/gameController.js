@@ -75,6 +75,7 @@ export default {
               }
               axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
                 .then((res) => {
+                  console.log('res from google axios request')
                   let RESPONSEName = res.data.results[0].name;
                   let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
                   setLocation = nearestParkCoords;

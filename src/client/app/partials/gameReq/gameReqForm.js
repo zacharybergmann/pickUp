@@ -11,6 +11,12 @@ var timeSlots = _.range(17, 23).map(function (hour) {
 angular.module('gameReqForm', ['pickUp.services', 'google.places', 'ui.mask'])
 .controller('TimeSelectController', function($scope, $location, GameReq, sharedProps) {
     var gameReq = {};
+    $scope.showInput = false;
+
+    $scope.howTo = function() {
+      console.log('clicking!')
+      $scope.showInput = !$scope.showInput;
+    }
     $scope.requestGame = function() {
       console.log('requesting Game');
       gameReq.time = helpers.createGameTime($scope.data.selectedOption.hour);

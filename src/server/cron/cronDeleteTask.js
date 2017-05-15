@@ -8,7 +8,7 @@ const cron = require('node-cron');
 
 cron.schedule('35 * * * *', () => {
   let time = new Date();
-  let checkTime = `${time.getUTCFullYear()}-0${time.getUTCMonth()+1}-${time.getUTCDate()}T${time.getUTCHours()}:00:00.000Z`
+  let checkTime = `${time.getFullYear()}-0${time.getMonth()+1}-${time.getDate()}T${time.getHours()+1}:00:00.000Z`
   console.log(checkTime, 'checkTime in delete task file')
   
   Game.find({ 'startTime': checkTime }, (err, games) => {

@@ -1,4 +1,9 @@
-<form ng-submit="requestGame()" >
+<div class="container">
+<div>
+  <button ng-click="howTo()">How To!</button>
+</div>
+<div ng-show="showInput">hello!</div>
+<form ng-submit="requestGame()" ng-hide="showInput">
   <div class="row">
     <div class="offset-by-three six columns" >
       <label for="dateInput">Time</label>
@@ -44,7 +49,8 @@
         id="phone"
         ng-model="smsNum"
         required />
-      <input class="button-primary" type="submit" value="Submit">
+      <input id="submitBtn" class="button-primary" type="submit" value="Submit">
     </div>
   </div> <!-- end of row  -->
 </form>
+</div>
