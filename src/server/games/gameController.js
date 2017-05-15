@@ -84,7 +84,7 @@ export default {
                         smsNum: num,
                         sport: gameReq.sport,
                         gameLoc: `${RESPONSEName}-${midAddress}`,
-                        gameTime: gameReq.time
+                        gameTime: moment(gameReq.time)
                       });
                     })
                   });
@@ -105,7 +105,7 @@ export default {
   },
 
 
-  addGameTextMode(gameReq, address, smsNum) {
+  addGameTextMode(gameReq, address, smsNum, res) {
     let newGame = new Game({
       sport: gameReq.sport,
       startTime: gameReq.time,
@@ -153,9 +153,9 @@ export default {
             }
           }
           axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
-            .then((res) => {
-              let RESPONSEName = res.data.results[0].name;
-              let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
+            .then((resp) => {
+              let RESPONSEName = resp.data.results[0].name;
+              let nearestParkCoords = `${resp.data.results[0].geometry.location.lng},${resp.data.results[0].geometry.location.lat}`;
               
               setLocation = nearestParkCoords;
               setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
@@ -164,7 +164,7 @@ export default {
                     smsNum: num,
                     sport: gameReq.sport,
                     gameLoc: `${RESPONSEName}-${midAddress}`,
-                    gameTime: gameReq.time
+                    gameTime: moment(gameReq.time)
                   });
                 })
               });

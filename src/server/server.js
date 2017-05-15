@@ -85,10 +85,9 @@ app.post('/sms', (req, res) => {
       return;
     }
 
-    gameController.addGameTextMode({ sport: mostLikelySport.sport, time: date, smsNum: phoneNum }, { lat: +lattitude, lng: +longitude }, phoneNum);
+    gameController.addGameTextMode({ sport: mostLikelySport.sport, time: date, smsNum: phoneNum }, { lat: +lattitude, lng: +longitude }, phoneNum, res);
 
     sms.sendError(phoneNum, 'Congratulations, you have been added to the game queue. We will let you know when your game is ready!');
-    res.send(200);
   }); 
 });
 
