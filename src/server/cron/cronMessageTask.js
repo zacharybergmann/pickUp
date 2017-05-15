@@ -10,7 +10,7 @@ const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 cron.schedule('30 * * * *', () => {
   let time = new Date();
-  let checkTime = `${time.getUTCFullYear()}-0${time.getUTCMonth()+1}-${time.getUTCDate()}T${time.getUTCHours()}:00:00.000Z`
+  let checkTime = `${time.getFullYear()}-0${time.getMonth()+1}-${time.getDate()}T${time.getHours()+1}:00:00.000Z`
   console.log(checkTime, 'check time');
   
   Game.find({ 'startTime': checkTime }, 'sport minPlayers startTime playRequests smsNums', (err, games) => {
