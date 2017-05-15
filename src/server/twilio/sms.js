@@ -13,7 +13,7 @@ const sms = {
     axios.get(`http://api.openweathermap.org/data/2.5/weather?q=NewOrleans&APPID=${process.env.WEATHER_ID}`)
       .then((weather) => {
         let currentTemp = temp(weather.data.main.temp)
-        let message = `We're playing ${sport} @ ${gameLoc} for ${moment(gameTime).format('llll')}. Expect ${weather.data.weather[0].main} and a Temp of ${currentTemp}°F. See you there!`;
+        let message = `We're playing ${sport}, meet up @ ${gameLoc} for ${moment(gameTime).format('llll')}. Expect ${weather.data.weather[0].main} and a Temp of ${currentTemp}°F. See you there!`;
         console.log('helol weather console log 1');
         return new Promise((resolve, reject) => {
           client.sendMessage({

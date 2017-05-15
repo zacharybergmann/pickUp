@@ -74,11 +74,15 @@ export default {
                 }
               }
               axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
-                .then((res) => {
-                  console.log('res from google axios request')
-                  let RESPONSEName = res.data.results[0].name;
-                  let nearestParkCoords = `${res.data.results[0].geometry.location.lng},${res.data.results[0].geometry.location.lat}`;
-                  setLocation = nearestParkCoords;
+                .then((resp) => {
+                  console.log(resp, 'resp from google axios request')
+                  let RESPONSEName = '';
+                  if(resp.data.results.length > 0 && typeof resp.data.results[0].geometry === 'object' && resp.data.results[0].name !== '') {
+                    console.log('inside of the IF');
+                    RESPONSEName = resp.data.results[0].name;
+                    let nearestParkCoords = `${resp.data.results[0].geometry.location.lng},${resp.data.results[0].geometry.location.lat}`;
+                    setLocation = nearestParkCoords;
+                  }
                   setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
                     helpers.forEachPlayer(game, (num) => {
                       sms.sendScheduledGame({
@@ -155,16 +159,20 @@ export default {
           }
           axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?', config)
             .then((resp) => {
-              let RESPONSEName = resp.data.results[0].name;
-              let nearestParkCoords = `${resp.data.results[0].geometry.location.lng},${resp.data.results[0].geometry.location.lat}`;
-              
-              setLocation = nearestParkCoords;
+              console.log(resp, 'resp from google axios request')
+              let RESPONSEName = '';
+              if(resp.data.results.length > 0 && typeof resp.data.results[0].geometry === 'object' && resp.data.results[0].name !== '') {
+                console.log('inside of the IF');
+                RESPONSEName = resp.data.results[0].name;
+                let nearestParkCoords = `${resp.data.results[0].geometry.location.lng},${resp.data.results[0].geometry.location.lat}`;
+                setLocation = nearestParkCoords;
+              }
               setLocation = helpers.reverseGeocode(setLocation, (midAddress) => {
                 helpers.forEachPlayer(game, (num) => {
                   sms.sendScheduledGame({
                     smsNum: num,
                     sport: gameReq.sport,
-                    gameLoc: `${RESPONSEName}-${midAddress}`,
+                    gameLoc: `${RESPONSEName}- ${midAddress}`,
                     gameTime: moment(gameReq.time)
                   });
                 })
@@ -173,6 +181,7 @@ export default {
         }
         return Promise.resolve(game);
       })
+      .catch(err => sms.sendError(num, 'Sorry, your address was unable to be resolved. Please try again with a different local address.'))
       .then(db.saveGame)
       .then((savedGame) => {
         res.status(201).json(savedGame);
