@@ -16,6 +16,33 @@ Once the project moves into development, the press release can be used as a touc
  
 # PickUp! #
 
+## Usage
+To Use our app the User will need to first run npm install and bower install to get all of the dependencies.
+
+A .env folder needs to be created in the root directory to hold all environmental variables. The environmental variables needed for this project are:
+MONGO_URI=your mongo db 
+PORT=the alternate port you want to use
+GOOGLE_GEOCODE_API=google api key
+TWILIO_NUM=twilio number
+TWILIO_ACCOUNT_SID=twilio account number
+TWILIO_SID=twilio sid number 
+TWILIO_AUTH_TOKEN=twilio auth token
+GOOGLE_MAPS_API=google maps api
+GOOGLE_MAPS_JAVASCRIPT_API=google maps javascript api
+WEATHER_ID=open weather map api key 
+
+To run in development environment, first run your mongo db in a terminal then run grunt dev in another.
+
+## Requirements
+-MongoDB
+-Express
+-Mongoose
+-Node
+-Grunt
+
+## Deployment 
+This project was deployed using a Ubuntu MEAN 14.04 Digital Ocean droplet. To re-deploy you need to clone the repo into the ~/ directory of your Digital Ocean droplet. Cd into your cloned repo and add a .env file with your environmental variables. Make sure you perform 'npm install' and 'bower install --allow-root'. After that run grunt prod and you should be good to go!
+
 ## PickUp takes the setup out of pick-up games. ##
 
 ## Summary ##
@@ -47,5 +74,5 @@ PickUp is crazy easy to use:
   There always a good squad of players ready to go. No more 2-on-2.
 
 ## Closing and Call to Action ##
-Ready to get you game on?! 
+Ready to get your game on?! 
 Download PickUp now!

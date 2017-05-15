@@ -55,13 +55,13 @@ app.post('/sms', (req, res) => {
   
   if(date === null) {
     sms.sendError(phoneNum, 'Sorry, we were unable to understand the date/time for your event. Please send a new request.');
-    res.send(500);
+    res.sendStatus(500);
     return;
   }
   axios.get(`http://geocoder.ca/${req.body.Body}?json=1?auth=10301591512318965`).then(resp => {
     if(resp.error) {
       sms.sendError(phoneNum, 'Sorry, we were unable to understand the address for your event. Please send a new request.');
-      res.send(500);
+      res.sendStatus(500);
       return;
     }
 
@@ -81,7 +81,7 @@ app.post('/sms', (req, res) => {
     , null);
     if(mostLikelySport.confidence < 0.70) {
       sms.sendError(phoneNum, 'Sorry, we were unable to understand the sport that you want to play. Please send a new request.')
-      res.send(500);
+      res.sendStatus(500);
       return;
     }
 
