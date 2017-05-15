@@ -7,3 +7,101 @@ body {
   text-decoration: none;
   color: #333;
 }
+
+#pickupbutton {
+    width: 50%;
+}
+.pickup {
+width:50%;
+}
+#maincard {
+    margin: auto;
+    width: 50%;
+    border: 1px solid lightgreen;
+    border-radius: 7px;
+    padding: 10px;
+    /*background-color: rgba(106,234,106,.5);*/
+     background:
+    -webkit-linear-gradient(
+        -90deg,
+        rgba(255, 255, 255,1) 25%,
+        rgba(5, 210, 5,.7) 100%
+  );   
+    /*padding-bottom:50px;*/
+}
+ #howto{
+   background-color:rgba(0,255,133,1);
+   font-size: 20px;
+   font-style: italic;
+   line-height: 20px;
+   box-sizing: border-box;
+   color: rgba(0,40,0,1);
+ }
+ #submitBtn {
+    font-size: 20px;
+   font-style: italic;
+   line-height: 20px;
+   box-sizing: border-box;
+   background-color: rgba(0,255,133,1);
+   color: rgba(0,40,0,1);
+ }
+ label {
+   font-size: 20px;
+   font-style: italic;
+   color: rgba(0,40,0,1);
+ }
+ ul {
+   text-align: left;
+ }
+
+body {
+  background:url("/logo/grass-field-green-sky-horizon.jpg")no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  margin-bottom: 75px;
+}
+
+.request {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+ font-size: 22px; 
+}
+submit{
+  padding-top:20px;
+  color: rgba(0,40,0,1);
+}
+.instructions {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size:16px;
+  list-style: none;
+  color: rgba(11,100,11,1);
+  font-style: italic; 
+  background-color: white;
+  border-radius:8px;
+}
+ul {
+    overflow: hidden;
+    list-style: none outside none;
+    padding: 0;
+
+}
+
+li {
+  border-bottom: 1px solid #D7DFE4;
+  overflow: hidden;
+  padding: 10px 0;
+  vertical-align: top;
+  margin: 0 0 -1px;
+  color: rgba(0,40,0,1);
+}
+.instructionsHead{
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size:16px;
+  font-style:italic;
+  border: 1px;
+  color: rgba(0,40,0,1);
+  background-color:white;
+  padding:15px;
+  border-radius:8px;
+}
