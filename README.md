@@ -40,6 +40,13 @@ To run in development environment, first run your mongo db in a terminal then ru
 -Node
 -Grunt
 
+Steps
+make the .env file with above reqs
+npm i
+npm i -g grunt
+grunt prod
+
+
 ## Deployment 
 This project was deployed using a Ubuntu MEAN 14.04 Digital Ocean droplet. To re-deploy you need to clone the repo into the ~/ directory of your Digital Ocean droplet. Cd into your cloned repo and add a .env file with your environmental variables. Make sure you perform 'npm install' and 'bower install --allow-root'. After that run grunt prod and you should be good to go!
 
