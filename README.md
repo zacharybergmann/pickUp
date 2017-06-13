@@ -42,6 +42,7 @@ To run in development environment, first run your mongo db in a terminal then ru
 
 Steps
 make the .env file with above reqs
+bower i
 npm i
 npm i -g grunt
 grunt prod
