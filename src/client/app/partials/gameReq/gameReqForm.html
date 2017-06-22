@@ -33,13 +33,6 @@
                 </ol>
               </li>
             </ul>
-            <!--<ul class="instructions w3-panel w3-card-4 w3-centered offset-by-one ten columns">
-              <li>1. Phone: Type in plain English: the sport, the time, and your location(city included). </li>
-              <li>2. Text it 906-451-5063. </li>
-              <li>3. When enough players have joined the game, a text will be sent with the most prime park location! </li>
-              <li>4. Get your gear, get your sweat band and get on the road! </li>
-              <li>Note: You can also input your request through this site, but who doesn't like getting texts? </li>
-            </ul>-->
           </div>
         </div>
         <form ng-submit="requestGame()" ng-hide="showInput">
@@ -56,13 +49,13 @@
             <div class="offset-by-two eight columns">
               <label for="sportInput">Sport</label>
               <select class="u-full-width" id="sportInput" ng-model="sportInput" required>
-        <option value="" >Pick A Sport!</option>
-        <option value="soccer" >Soccer</option>
-        <option value="basketball" >Basketball</option>
-        <option value="baseball" >Baseball</option>
-        <option value="football" >Football</option>
-        <option value="volleyball" >Volleyball</option>
-      </select>
+              <option value="default">Pick A Sport!</option>
+              <option value="soccer" >Soccer</option>
+              <option value="basketball" >Basketball</option>
+              <option value="baseball" >Baseball</option>
+              <option value="football" >Football</option>
+              <option value="volleyball" >Volleyball</option>
+            </select>
             </div>
           </div>
           <!-- end of row  -->
