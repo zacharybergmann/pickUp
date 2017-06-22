@@ -40,5 +40,5 @@ bower_components/
 .floobit
 .floo
 .flooignore
-docker.compose.yml
+docker-compose.yml
 
