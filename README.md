@@ -25,6 +25,7 @@ PickUp uses a number of open source projects to find you games!:
 * [NodeJS] - evented I/O for the backend
 * [ExpressJS] - fast node.js network app framework
 * [Docker] - rapid deployment using containers for environment consistency
+* [Grunt] - Build process for production environment files
 * [Digital Ocean] - deployment environment for the live application
 * [Twilio API] - enable SMS to and from users
 * [Geocoder] - Get coordinates from an address
@@ -64,7 +65,7 @@ grunt prod         (also available: grunt dev    grunt bypass)
 ```
 (Note: You need to have Nodemon installed to run in development mode. If you do not have Nodemon, install it or use 'grunt prod or grunt bypass' instead)
 
-### Redeploying the application
+### Redeploying the application - Creating docker-compose file
 The application has been Dockerized to assist with consistency across all platforms. As a result, a docker-compose.yml
 file should be created in the deploy environment and run to redeploy. The docker-compose.yml file should look similar
 to the following but should have the INSERTs should be filled in. Keep in mind that during development the database 
@@ -110,8 +111,12 @@ The above should be added into the ~ directory in the deployment environment. Us
 
 Once this file has been created in the deployed environment, docker and docker-compose should be installed
 there as well. Instructions to do this in an Ubuntu 16.04 box are below:
+
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
 https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
+
+### docker and docker-compose commands for re-deployment
 
 Once this is done, deployment is done by running the following commands:
 
